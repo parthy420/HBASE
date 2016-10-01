@@ -1,0 +1,85 @@
+
+1. Download Hbase-1.1.2 from apache site: http://mirror.olnevhost.net/pub/apache/hbase/hbase-1.0.3/
+2. Copy -paste hbase-1.1.2-bin.tar.gz to your home directory say /home/hduser
+
+ 
+3. Untar the hbase-1.1.2-bin.tar.gz tar file
+a. Open command prompt
+b. Type command: >sudo tar  -xzf   /home/hduser/hbase-1.1.2-bin.tar.gz
+
+ 
+4. Create directory “hbase” in /usr/lib
+a. Type Command: > sudo mkdir /usr/lib/hbase
+
+ 
+5. Move untar file : hbase-1.1.2to /usr/lib/hbase
+a. Type command: > sudo mv /home/hduser/hbase-1.1.2 /usr/lib/hbase
+
+ 
+6. Edit hbase-site.xml and hbase-env.sh
+a. On command Prompt, run following commands
+b. > cd /usr/lib/hbase/hbase-1.1.2/conf
+c. > sudo gedit hbase-site.xml
+d. copy – paste below configuration into hbase-site.xml
+<configuration>
+<property>
+<name>hbase.cluster.distributed</name>
+<value>true</value>
+</property>
+<property>
+<name>hbase:rootdir</name>
+<value>hdfs://localhost:9000/hbase</value>
+</property>
+</configuration>
+ e. save and exit geditor.
+
+ 
+7. Edit hbase-env.sh
+a. On command Prompt, run following commands
+b. > cd /usr/lib/hbase/hbase-1.1.2/conf
+c. > sudo gedit hbase-env.sh
+d. Export your java home path
+e.g. export JAVA_HOME=/usr/lib/jvm/oracle_jdk8/jdk1.8.0_51
+e. Save and exit geditor
+f. Exit command prompt
+
+ 
+8. Export hbase_home path in .bashrc file, run following command
+a. Open new terminal (command prompt)
+b. > sudo vi .bashrc
+c. Add following commands
+export HBASE_HOME=/usr/lib/hbase/hbase-1.1.2
+export PATH=$PATH:$HBASE_HOME/bin
+d. Exit vi editor
+ 
+9. Now start hadoop services, run following command
+a. > start-dfs.sh
+b. > start-yarn.sh
+c. Verify that hadoop services are running , type command
+> jps
+
+ 
+10 . Now start hbase services, type command
+a. > start-hbase.sh
+b. Verify that hbase services are riunning, type command
+c. > jps
+d. Following services name are displayed on command prompt
+Hmaster
+HregionServer
+HquorumPeer
+
+ 
+11. Verify that on HDFS (Hadoop Distributed File system ) hbase directory is created,
+On Command prompt enter following command
+a. hadoop fs -ls /tmp/hbase-hduser
+
+ 
+12. On Command prompt type commands :
+a. > hbase shell
+b. After running above command hbase propmt is displayed as
+c. hbase(main) :001:0>
+
+ 
+13. To verify hbase running on web browser :
+a. Open Web browser
+b.type url  http://localhost:16010/master-status
